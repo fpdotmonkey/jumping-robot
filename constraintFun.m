@@ -1,8 +1,11 @@
-function [c, ceq] = constraintFun(q, dL, Lcomp)
-    posX = sum(dL*cos(cumsum(q)));
-    posY = sum(dL*sin(cumsum(q)));
+function [nonlinearInequalities, nonlinearEqualities] ...
+        = constraintFun(deflection, dLength, totalLength)
+    
+    posX = sum(dLength * cos(cumsum(deflection)));
+    posY = sum(dLength * sin(cumsum(deflection)));
+    
     cX = posX;
-    cY = posY - Lcomp;
-    c = [];
-    ceq = [cX; cY];
+    cY = posY - totalLength;
+    nonlinearInequalities = [];
+    nonlinearEqualities = [ cX; cY ];
 end
