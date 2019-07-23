@@ -1,0 +1,326 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     13196,        316]
+NotebookOptionsPosition[     12235,        291]
+NotebookOutlinePosition[     12570,        306]
+CellTagsIndexPosition[     12527,        303]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"specificDrag", "=", "10"}], ";"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"dragCoefficient", "=", "1.4"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"airDensity", "=", "1.225"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"totalEnergy", "=", "0.6946"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"gravity", "=", "9.81"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{"payloadMass", "=", "0.8"}], ";"}], "*)"}], 
+    "\[IndentingNewLine]", 
+    RowBox[{"hingeMass", "=", "0.02"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"springMass", "=", "0.0015"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{"dragMassPerArea", "=", "1"}], ";"}], "*)"}], 
+    "\[IndentingNewLine]", 
+    RowBox[{"NSolve", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"specificDrag", "\[Equal]", 
+        RowBox[{
+        "2", "dragCoefficient", " ", "airDensity", " ", "dragArea", " ", 
+         RowBox[{"(", 
+          RowBox[{"payloadMass", "+", 
+           RowBox[{"dragArea", " ", "dragMassPerArea"}], "+", 
+           RowBox[{".5", 
+            RowBox[{"(", 
+             RowBox[{"springMass", "+", "hingeMass"}], ")"}]}]}], ")"}], 
+         RowBox[{"totalEnergy", "/", 
+          RowBox[{"(", 
+           RowBox[{
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{"payloadMass", "+", 
+               RowBox[{"dragArea", " ", "dragMassPerArea"}], "+", 
+               "springMass", "+", "hingeMass"}], ")"}], "3"], "gravity"}], 
+           ")"}]}]}]}], "&&", 
+       RowBox[{"dragArea", ">", "0"}]}], ",", "dragArea"}], "]"}]}], ",", 
+   RowBox[{"{", 
+    RowBox[{"payloadMass", ",", "0", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"dragMassPerArea", ",", "0", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"specificDrag", ",", "0.1", ",", "10"}], "}"}]}], "]"}]], "Input",\
+
+ CellChangeTimes->{{3.772816466025823*^9, 3.772816608018649*^9}, {
+   3.7728169135159283`*^9, 3.772817088546426*^9}, {3.772817310055314*^9, 
+   3.772817440719378*^9}, {3.772818158890484*^9, 3.77281815895222*^9}, {
+   3.7728228109253607`*^9, 3.7728228113159122`*^9}, {3.772822849538765*^9, 
+   3.772822849971363*^9}, {3.7728235898033*^9, 3.772823596787786*^9}, {
+   3.7728236339476357`*^9, 3.7728236468714533`*^9}, {3.772824392042186*^9, 
+   3.772824416761787*^9}, 3.772824449889822*^9},
+ CellLabel->"In[95]:=",ExpressionUUID->"8e780035-fc75-4f55-9d39-5befb3c3c90a"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`dragMassPerArea$$ = 
+    0.0103, $CellContext`payloadMass$$ = 1., $CellContext`specificDrag$$ = 
+    5.739999999999999, Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`payloadMass$$], 0, 5}, {
+      Hold[$CellContext`dragMassPerArea$$], 0, 1}, {
+      Hold[$CellContext`specificDrag$$], 0.1, 10}}, Typeset`size$$ = {
+    329., {3., 10.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`payloadMass$2343647$$ = 
+    0, $CellContext`dragMassPerArea$2343648$$ = 
+    0, $CellContext`specificDrag$2343649$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`dragMassPerArea$$ = 
+        0, $CellContext`payloadMass$$ = 0, $CellContext`specificDrag$$ = 0.1},
+       "ControllerVariables" :> {
+        Hold[$CellContext`payloadMass$$, $CellContext`payloadMass$2343647$$, 
+         0], 
+        Hold[$CellContext`dragMassPerArea$$, \
+$CellContext`dragMassPerArea$2343648$$, 0], 
+        Hold[$CellContext`specificDrag$$, $CellContext`specificDrag$2343649$$,
+          0]}, "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> ($CellContext`dragCoefficient = 1.4; $CellContext`airDensity = 
+        1.225; $CellContext`totalEnergy = 0.6946; $CellContext`gravity = 
+        9.81; $CellContext`hingeMass = 0.02; $CellContext`springMass = 0.0015; 
+       NSolve[
+         And[$CellContext`specificDrag$$ == 
+          2 $CellContext`dragCoefficient $CellContext`airDensity \
+$CellContext`dragArea ($CellContext`payloadMass$$ + $CellContext`dragArea \
+$CellContext`dragMassPerArea$$ + 
+            
+            0.5 ($CellContext`springMass + $CellContext`hingeMass)) \
+($CellContext`totalEnergy/(($CellContext`payloadMass$$ + \
+$CellContext`dragArea $CellContext`dragMassPerArea$$ + \
+$CellContext`springMass + $CellContext`hingeMass)^3 $CellContext`gravity)), \
+$CellContext`dragArea > 0], $CellContext`dragArea]), 
+      "Specifications" :> {{$CellContext`payloadMass$$, 0, 
+         5}, {$CellContext`dragMassPerArea$$, 0, 
+         1}, {$CellContext`specificDrag$$, 0.1, 10}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{374., {120., 126.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.772817082972131*^9, 3.7728170893679132`*^9}, {
+   3.772817364593099*^9, 3.772817465425061*^9}, 3.772817605576865*^9, {
+   3.772818159738459*^9, 3.7728181688260593`*^9}, 3.772818203088645*^9, {
+   3.7728228123373404`*^9, 3.772822818789895*^9}, {3.772822851256893*^9, 
+   3.7728228533946857`*^9}, {3.772823590516814*^9, 3.772823648918735*^9}, {
+   3.772824429956699*^9, 3.772824460639578*^9}},
+ CellLabel->"Out[95]=",ExpressionUUID->"cbbb8f97-6dcb-4d94-8567-a1bf44ab9aea"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"possibleMasses", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Length", "[", 
+         RowBox[{"NSolve", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"specificDrag", "\[Equal]", 
+             RowBox[{
+             "2", "dragCoefficient", " ", "airDensity", " ", "dragArea", " ", 
+              
+              RowBox[{"(", 
+               RowBox[{"payloadMass", "+", 
+                RowBox[{"dragArea", " ", "dragMassPerArea"}], "+", 
+                RowBox[{".5", 
+                 RowBox[{"(", 
+                  RowBox[{"springMass", "+", "hingeMass"}], ")"}]}]}], ")"}], 
+              
+              RowBox[{"totalEnergy", "/", 
+               RowBox[{"(", 
+                RowBox[{
+                 SuperscriptBox[
+                  RowBox[{"(", 
+                   RowBox[{"payloadMass", "+", 
+                    RowBox[{"dragArea", " ", "dragMassPerArea"}], "+", 
+                    "springMass", "+", "hingeMass"}], ")"}], "3"], 
+                 "gravity"}], ")"}]}]}]}], "&&", 
+            RowBox[{"dragArea", ">", "0"}]}], ",", "dragArea"}], "]"}], "]"}],
+         ">", "0"}], ",", "True", ",", "False"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"payloadMass", ",", "0", ",", "5", ",", ".01"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"dragMassPerArea", ",", "0", ",", "1", ",", ".01"}], "}"}]}], 
+    "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.7728185902311697`*^9, 3.772818717499432*^9}, {
+  3.772819042884343*^9, 3.772819042925839*^9}},
+ CellLabel->"In[32]:=",ExpressionUUID->"5386c79d-d182-4a34-8788-d41061d9ba6d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Show", "[", 
+  RowBox[{
+   RowBox[{"ArrayPlot", "[", 
+    RowBox[{"possibleMasses", "/.", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"True", "\[Rule]", "1"}], ",", 
+       RowBox[{"False", "\[Rule]", "0"}]}], "}"}]}], "]"}], ",", 
+   RowBox[{"Graphics", "[", 
+    RowBox[{"{", 
+     RowBox[{"Red", ",", 
+      RowBox[{"Line", "[", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"48", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"48", ",", "500"}], "}"}]}], "}"}], "]"}], ",", "Blue", ",", 
+      RowBox[{"Line", "[", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "400"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"100", ",", "400"}], "}"}]}], "}"}], "]"}]}], "}"}], 
+    "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.7728188014917583`*^9, 3.77281882970747*^9}, {
+  3.7728192879145823`*^9, 3.7728192949638147`*^9}, {3.772821611766553*^9, 
+  3.772821646990839*^9}, {3.77282172402826*^9, 3.7728218511387444`*^9}, {
+  3.77282188902846*^9, 3.7728220972853947`*^9}},
+ CellLabel->"In[61]:=",ExpressionUUID->"157a5c1e-2ef7-4c9a-a87d-064781a7ab55"],
+
+Cell[BoxData[
+ GraphicsBox[{RasterBox[CompressedData["
+1:eJztzcFNxDAUBUAvndASJazEmeq5I+6bxLH/wyiZaWDen18fz7fW2vejtc/2
+65EnkUgkEolEIpFIJBKJRCKRSCQSiUQikUgkEolEIpFIJBKJRCKRSCQSiUQi
+kUgkEolEIpFIJBKJRCKRSCQSiUQikUgkkhslf7BIJBKJRCKRSCQSiUQikUgk
+EolEIpFIJBKJRCKRSCQSiUQi6U7yi0QikUgkEolEIpFIJBKJRCIZSOKLRCKR
+SCQSiUQiuUSSXiQSiUQikSxKwotEIpFI9pPsIpFI7phEF4lEciJJLpLbJ8FF
+Isktkv+dxJaLJqlFMpGElssmmWVJElnWJIllURJYViX1y7KkfHmZVC8Lk+Jl
+I6ldtpLSZTOpXLaTwmUnqVv2krJmPylaDpKa5jCpaDqS+aYrmW06k7mnP5l4
+TiWjz9lkKBpJTk/DyZlqMum7apKDrTh5HQYTBv0AJvq7sA==
+    "], {{0, 0}, {101, 
+    501}}, {0, 1}], {
+    {RGBColor[1, 0, 0], LineBox[{{48, 0}, {48, 500}}]}, 
+    {RGBColor[0, 0, 1], LineBox[{{0, 400}, {100, 400}}]}}},
+  Frame->Automatic,
+  FrameLabel->{None, None},
+  FrameTicks->{{None, None}, {None, None}},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  Method->{
+   "DefaultBoundaryStyle" -> Automatic, 
+    "DefaultGraphicsInteraction" -> {
+     "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+      "Effects" -> {
+       "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2}, 
+        "Droplines" -> {
+         "freeformCursorMode" -> True, 
+          "placement" -> {"x" -> "All", "y" -> "None"}}}}, "DefaultPlotStyle" -> 
+    Automatic}]], "Output",
+ CellChangeTimes->{{3.772818809168962*^9, 3.7728188312413177`*^9}, {
+  3.7728192717284203`*^9, 3.7728192954142733`*^9}, {3.7728216334300747`*^9, 
+  3.772821647370729*^9}, {3.77282178364952*^9, 3.772821799932383*^9}, {
+  3.772821832897566*^9, 3.772821851799439*^9}, {3.772821889756461*^9, 
+  3.772821964035478*^9}, {3.772822006639984*^9, 3.772822097833744*^9}},
+ CellLabel->"Out[61]=",ExpressionUUID->"899941aa-64b8-4ae9-8f28-1029a5a0dddf"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"Total", "[", 
+     RowBox[{
+      RowBox[{"possibleMasses", "\[LeftDoubleBracket]", 
+       RowBox[{"All", ",", "49"}], "\[RightDoubleBracket]"}], "/.", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"True", "\[Rule]", "1"}], ",", 
+        RowBox[{"False", "\[Rule]", "0"}]}], "}"}]}], "]"}], "-", "2"}], 
+   ")"}], "/", "100."}]], "Input",
+ CellChangeTimes->{{3.7728224939958878`*^9, 3.772822652898654*^9}, {
+  3.7728229247901793`*^9, 3.772822939358778*^9}, {3.772823092050991*^9, 
+  3.772823092144405*^9}},
+ CellLabel->"In[88]:=",ExpressionUUID->"c4af3a5c-0ef4-455b-b511-c780d5f7cfdb"],
+
+Cell[BoxData["0.08`"], "Output",
+ CellChangeTimes->{{3.77282249896889*^9, 3.772822653188743*^9}, {
+  3.772822926981402*^9, 3.7728229396802263`*^9}, {3.772823088176133*^9, 
+  3.772823092721912*^9}},
+ CellLabel->"Out[88]=",ExpressionUUID->"931d32ae-bc43-426b-9bda-1517ea1c7a5b"]
+}, Open  ]]
+},
+WindowSize->{808, 678},
+WindowMargins->{{3, Automatic}, {Automatic, 4}},
+FrontEndVersion->"12.0 for Mac OS X x86 (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 2540, 57, 335, "Input",ExpressionUUID->"8e780035-fc75-4f55-9d39-5befb3c3c90a"],
+Cell[3123, 81, 3512, 65, 265, "Output",ExpressionUUID->"cbbb8f97-6dcb-4d94-8567-a1bf44ab9aea"]
+}, Open  ]],
+Cell[6650, 149, 1676, 41, 213, "Input",ExpressionUUID->"5386c79d-d182-4a34-8788-d41061d9ba6d"],
+Cell[CellGroupData[{
+Cell[8351, 194, 1184, 31, 52, "Input",ExpressionUUID->"157a5c1e-2ef7-4c9a-a87d-064781a7ab55"],
+Cell[9538, 227, 1707, 34, 449, "Output",ExpressionUUID->"899941aa-64b8-4ae9-8f28-1029a5a0dddf"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11282, 266, 658, 16, 30, "Input",ExpressionUUID->"c4af3a5c-0ef4-455b-b511-c780d5f7cfdb"],
+Cell[11943, 284, 276, 4, 34, "Output",ExpressionUUID->"931d32ae-bc43-426b-9bda-1517ea1c7a5b"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

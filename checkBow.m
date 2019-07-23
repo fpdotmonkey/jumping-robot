@@ -5,16 +5,16 @@ gravity = 9.81;  % m/s^2
 
 %% To change
 % Mechanism values
-payloadMass = 0.255; % kg
+payloadMass = 0.8; % kg
 hingeMass = 0.02;  % kg
-dragArea = (2*0.0254)^2 * pi/4;  % m^2
+dragArea = .009291^2 * pi;  % m^2
 dragCoefficient = 1.5;
 
 % Bow Dimensions
 uncompressedLength = 1;  % m
 compressedLength = 0.23;  % m
-springWidth = 0.220*0.0254;  % m
-springThickness = 0.092*0.0254;  % m
+springWidth = .00317;  % m
+springThickness = .00080;  % m
 numberOfSprings = 4;
 
 
@@ -77,7 +77,8 @@ c.Label.String = 'Stress (Pa)';
                      dragArea, efficiency, ...
                      totalEnergy, totalMass);
 
-IDnumber = totalMass * gravity / (densityAir * dragArea * initialVelocity^2);
+specificDrag = (dragCoefficient * densityAir * dragArea * initialVelocity^2) ...
+    / (totalMass * gravity);
 performanceRatio = dragHeight / noDragHeight;
 
 %% Stats
@@ -99,5 +100,5 @@ fprintf('Total Energy\t%6.1f J\n', totalEnergy);
 fprintf('Efficiency\t%6.2f\n', efficiency);
 fprintf('No drag height\t%6.1f m\n', noDragHeight);
 fprintf('Drag height\t%6.1f m\n', dragHeight);
-fprintf('ID Number\t%6.1f\n', IDnumber);
-fprintf('Performance\t%6.1f\n', performanceRatio);
+fprintf('Specific Drag\t%6.1f\n', specificDrag);
+fprintf('Performance\t%6.3f\n', performanceRatio);
