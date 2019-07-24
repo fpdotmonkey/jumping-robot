@@ -11,16 +11,16 @@ springDensity = 1500;
 hingeMass = .020;
 
 numberOfSprings = 4;
-springWidth = .0032;
-springThickness = .0008;
+springWidth = .0047752;
+springThickness = .0004826;
 
 dragCoefficient = 1.4;
 dragMassPerArea = .0103;  % CF reinforced epoxy, .77mm thick
 
-numberOfRobots = 10;
-specificDrags = logspace(-1, 2, numberOfRobots)';
-uncompressedLength = 1.0;
-compressedLength = .23;
+numberOfRobots = 5;
+specificDrags = logspace(-2, 2, numberOfRobots)';
+uncompressedLength = 0.25;
+compressedLength = .23 * uncompressedLength;
 payloadMass = 0.000;
 
 jumpPerformances = zeros(length(specificDrags), 1);
@@ -56,7 +56,7 @@ for i = 1:length(specificDrags)
               DRAG_AREA);
     
     if (length(potentialSolution) > 0)
-        dragAreas(i) = potentialSolution;
+        dragAreas(i) = real(double(potentialSolution));
         jumpPerformances(i) = 2 / specificDrags(i) * log(1 + .5* ...
                                                      specificDrags(i));
         
@@ -74,7 +74,6 @@ for i = 1:length(specificDrags)
     
 
 end
-dragAreas = real(double(dragAreas));
 dragRadii = 100 * sqrt(dragAreas / pi);
 
 designTable = table(specificDrags, jumpPerformances, dragAreas, dragRadii, ...

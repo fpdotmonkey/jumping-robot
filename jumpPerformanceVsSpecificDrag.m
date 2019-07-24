@@ -1,6 +1,6 @@
 dragCoefficients = 1;
 
-specificDrags = logspace(-1, 2);
+specificDrags = logspace(-2, 2);
 
 jumpPerformances = zeros(length(specificDrags), ...
                          length(dragCoefficients));
