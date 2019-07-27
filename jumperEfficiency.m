@@ -1,5 +1,6 @@
 function efficiency = jumperEfficiency(hingeMass, numberOfSprings, ...
-                                       massOneSpring, payloadMass)
+                                       massOneSpring, payloadMass, ...
+                                       dragMassPerArea, dragArea)
 
 totalMass = hingeMass + payloadMass + numberOfSprings * massOneSpring;
 

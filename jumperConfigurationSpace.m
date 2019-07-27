@@ -10,17 +10,18 @@ springDensity = 1500;
 massHinge = .020;
 
 numberOfSprings = 4;
-springWidth = .0047752;
-springThickness = .0004826;
+springWidth = .310 * .0254;%.0047752;
+springThickness = .032 * .0254;%.0004826;
 
 dragCoefficient = 1.4;
-dragMassPerArea = 1.0969;  % CF reinforced epoxy, .77mm thick
+%dragMassPerArea = 1.0969;  % CF reinforced epoxy, .77mm thick
+dragMassPerArea = 0.09319;  % foam board, 4.75mm thick
 
 desiredSpecificDrags = logspace(-2, 2, 5);
 
-SPRING_LENGTH = 0.15:0.05:1.00;
-DRAG_RADIUS = 0.00:0.01:0.200;
-MASS_PAYLOAD = 0.000;
+SPRING_LENGTH = 0.10:0.05:1.00;
+DRAG_RADIUS = 0.005:0.01:0.205;
+MASS_PAYLOAD = 0.020;
 
 [ DR, SL ] = meshgrid(DRAG_RADIUS, SPRING_LENGTH);
 
@@ -45,7 +46,9 @@ for i = 1:length(DR(:, 1))
         efficiency = jumperEfficiency(massHinge, ...
                                       numberOfSprings, ...
                                       massSpring / numberOfSprings, ...
-                                      MASS_PAYLOAD);
+                                      MASS_PAYLOAD, ...
+                                      dragMassPerArea, ...
+                                      dragArea);
 
         [ velocity(i, j), ~, ~ ] = jumperJumpHeight(gravity, ...
                                                     airDensity, ...
