@@ -1,0 +1,680 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     27401,        672]
+NotebookOptionsPosition[     23904,        607]
+NotebookOutlinePosition[     24412,        628]
+CellTagsIndexPosition[     24341,        623]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Bow Jumping Robots with a Massive Spring", "Title",
+ CellChangeTimes->{{3.777259662476267*^9, 
+  3.777259679771892*^9}},ExpressionUUID->"138ff5a6-83f3-4833-a7ad-\
+e93ed0db1b08"],
+
+Cell["Fletcher Porter", "Subtitle",
+ CellChangeTimes->{{3.777259683764675*^9, 
+  3.7772596867078743`*^9}},ExpressionUUID->"37460bd0-3ea3-48c7-bbb8-\
+783fb8e66e84"],
+
+Cell[CellGroupData[{
+
+Cell["Lossless model", "Chapter",
+ CellChangeTimes->{{3.7772597137341843`*^9, 
+  3.7772597268619623`*^9}},ExpressionUUID->"c17cd5fe-76d2-4566-a93b-\
+34f171cc468b"],
+
+Cell[TextData[{
+ "Based on the results in ",
+ ButtonBox[Cell[TextData[StyleBox[ButtonBox["1"],
+  FontVariations->{"CompatibilityType"->"Superscript"}]], "Citation",
+  Editable->False,
+  TaggingRules->{NoteData -> RowBox[{
+       RowBox[{
+         RowBox[{"M", ".", " ", "Ilton"}], " ", 
+         RowBox[{
+          "et", ".", " ", "al", ".", "  ", 
+           "\"Supplementary Materials for The principles of cascading power \
+limits in small, fast biological and engineered systems\""}]}], ",", " ", 
+       "Science", ",", " ", 
+       RowBox[{"27", " ", "April", " ", "2018."}]}]},ExpressionUUID->
+  "c183506f-c922-4cc0-90a7-b3c76e2949b9"],
+  BaseStyle->"Hyperlink",
+  ButtonData->"00005981"],
+ "we know that it\[CloseCurlyQuote]s important to consider the springs for \
+the bow jumping robot to have mass since the dynamics of the spring \
+contribute significantly in systems where there\[CloseCurlyQuote]s large \
+acceleration in the spring.  For the purposes of this analysis, I\
+\[CloseCurlyQuote]ll assume that the bow springs have constant mass density \
+per length and that the velocity distribution of the spring is a linear \
+function.  These assumptions will need to be verified in the future."
+}], "Text",
+ CellChangeTimes->{{3.776141014608198*^9, 3.7761410294236317`*^9}, {
+   3.776141169853231*^9, 3.7761412356621923`*^9}, {3.7761412743281918`*^9, 
+   3.776141327801749*^9}, {3.776141391091329*^9, 3.776141474093532*^9}, {
+   3.7761415133440247`*^9, 3.776141535967268*^9}, 
+   3.777258479931728*^9},ExpressionUUID->"db6debf8-3de3-4d86-bd32-\
+5bf6068e8e9c"],
+
+Cell[TextData[{
+ "Here I define the mass and velocity of the spring based on the position and \
+velocity of the endpoints of the spring.  I\[CloseCurlyQuote]ll parameterize \
+the length of the spring with ",
+ StyleBox["xp", "Input"],
+ ", which runs from 0 (the bottom of the spring) to 1 (the top of the spring)."
+}], "Text",
+ CellChangeTimes->{{3.7761416773949842`*^9, 3.776141699683793*^9}, {
+  3.776141773486533*^9, 
+  3.776141855640718*^9}},ExpressionUUID->"d6138002-adf8-4adb-a724-\
+63b233059934"],
+
+Cell[BoxData[{
+ RowBox[{"ClearAll", "[", "massDensity", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"massDensity", "[", 
+   RowBox[{"xtip_", ",", "xbase_"}], "]"}], ":=", 
+  FractionBox["springMass", 
+   RowBox[{"xtip", "-", "xbase"}]]}]}], "Input",
+ CellChangeTimes->{{3.775007084141563*^9, 3.775007133490781*^9}, {
+  3.775018551476076*^9, 3.775018559640806*^9}, {3.7761313919796953`*^9, 
+  3.7761314012635736`*^9}, {3.776132268730777*^9, 3.776132288522009*^9}, {
+  3.7761335701635313`*^9, 3.776133579336462*^9}, {3.7761336147220697`*^9, 
+  3.7761336184176598`*^9}, {3.7761337678083*^9, 3.776133770886712*^9}, {
+  3.776138002768981*^9, 3.776138019100717*^9}},
+ CellLabel->"In[6]:=",ExpressionUUID->"23699385-cd69-4d6b-b3f4-87715476ffc4"],
+
+Cell[BoxData[{
+ RowBox[{"ClearAll", "[", "velocityDistribution", 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"velocityDistribution", "[", 
+   RowBox[{"xp_", ",", "xtip_", ",", "xbase_", ",", "vtip_", ",", "vbase_"}], 
+   "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"vtip", "-", "vbase"}], ")"}], "xp"}], "+", 
+   RowBox[{"vbase", 
+    FractionBox["xbase", 
+     RowBox[{"xtip", "-", "xbase"}]]}]}]}]}], "Input",
+ CellChangeTimes->{{3.775007150731764*^9, 3.775007210917109*^9}, {
+   3.775007644362512*^9, 3.7750076829698*^9}, {3.7750080010780354`*^9, 
+   3.775008004012958*^9}, 3.775008472596394*^9, {3.7750185417777367`*^9, 
+   3.775018567195096*^9}, {3.77613221968985*^9, 3.7761322508747463`*^9}, {
+   3.776132400559524*^9, 3.776132417037726*^9}, {3.776133692937407*^9, 
+   3.7761337553015347`*^9}, {3.776135180674692*^9, 3.776135191464775*^9}, {
+   3.776138094756*^9, 3.776138140747101*^9}, {3.776138173380816*^9, 
+   3.776138182715291*^9}, {3.776138299258078*^9, 3.776138314367852*^9}, 
+   3.77613840766014*^9},
+ CellLabel->"In[8]:=",ExpressionUUID->"ad7074e9-60f6-44fc-9552-5ba7216b6c36"],
+
+Cell[TextData[{
+ "Next I define conservation quantities based on the massive spring model.  \
+It\[CloseCurlyQuote]s the same as the regular expressions for energy and \
+momentum, but it\[CloseCurlyQuote]s integrated over ",
+ StyleBox["xp", "Input"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.776141738652965*^9, 3.776141759566533*^9}, {
+  3.7761418781696587`*^9, 3.776141883657455*^9}, {3.776142214916779*^9, 
+  3.776142317822507*^9}},ExpressionUUID->"00c404bd-1adf-4e0e-ab93-\
+c8f42f124b6f"],
+
+Cell[BoxData[{
+ RowBox[{"ClearAll", "[", "momentum", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"momentum", "[", 
+   RowBox[{"xtip_", ",", "xbase_", ",", "vtip_", ",", "vbase_"}], "]"}], ":=", 
+  RowBox[{"Integrate", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"xtip", "-", "xbase"}], ")"}], 
+     RowBox[{"massDensity", "[", 
+      RowBox[{"xtip", ",", "xbase"}], "]"}], 
+     RowBox[{"velocityDistribution", "[", 
+      RowBox[{"xp", ",", "xtip", ",", "xbase", ",", "vtip", ",", "vbase"}], 
+      "]"}]}], ",", 
+    RowBox[{"{", 
+     RowBox[{"xp", ",", "0", ",", "1"}], "}"}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.776131416128255*^9, 3.776131475569529*^9}, {
+   3.776132324126442*^9, 3.77613235708359*^9}, {3.776132490618552*^9, 
+   3.77613249684146*^9}, {3.776133782643626*^9, 3.776133800922564*^9}, {
+   3.776138010393628*^9, 3.776138038611095*^9}, 3.776138371797701*^9, 
+   3.776138411435565*^9, {3.776141898485095*^9, 3.776141952381969*^9}},
+ CellLabel->"In[10]:=",ExpressionUUID->"9ede62a7-b936-4e11-bd8a-9f54701ba933"],
+
+Cell[BoxData[{
+ RowBox[{"ClearAll", "[", "energy", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"energy", "[", 
+   RowBox[{"xtip_", ",", "xbase_", ",", "vtip_", ",", "vbase_"}], "]"}], ":=", 
+  RowBox[{"Integrate", "[", 
+   RowBox[{
+    RowBox[{
+     FractionBox["1", "2"], 
+     RowBox[{"(", 
+      RowBox[{"xtip", "-", "xbase"}], ")"}], 
+     RowBox[{"massDensity", "[", 
+      RowBox[{"xtip", ",", "xbase"}], "]"}], 
+     SuperscriptBox[
+      RowBox[{"velocityDistribution", "[", 
+       RowBox[{"xp", ",", "xtip", ",", "xbase", ",", "vtip", ",", "vbase"}], 
+       "]"}], "2"]}], ",", 
+    RowBox[{"{", 
+     RowBox[{"xp", ",", "0", ",", "1"}], "}"}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.775017648589518*^9, 3.775017677573295*^9}, {
+   3.775017715200177*^9, 3.775017717846032*^9}, {3.7750184021887712`*^9, 
+   3.775018437267597*^9}, 3.776132309165737*^9, {3.776132444161407*^9, 
+   3.7761324769526873`*^9}, {3.776133813372738*^9, 3.776133829191823*^9}, {
+   3.77613701000216*^9, 3.7761370138078423`*^9}, 3.776138041822301*^9, 
+   3.7761383742153463`*^9, 3.7761384135078583`*^9, {3.776141934446143*^9, 
+   3.7761419713971767`*^9}},
+ CellLabel->"In[12]:=",ExpressionUUID->"5fb79ab7-3dcd-47d6-9819-77bafb19a7ae"],
+
+Cell["\<\
+To find the jump height assuming no losses, I\[CloseCurlyQuote]ll assume that \
+by the time the spring has reached the maximum height, its bottom will be \
+going the same speed as the top.  This assumption is invalid for small \
+heights (just before the spring leaves the ground, the top will be moving \
+quickly and the bottom will not be moving at all), but after an initial \
+transient it seems reasonable to assume the entire spring will be moving at a \
+uniform velocity.  The speed can be found with an energy balance where the \
+initial state is pure elastic energy and the final state is kinetic and \
+gravitational energy.\
+\>", "Text",
+ CellChangeTimes->{{3.776142384755134*^9, 
+  3.776142711811554*^9}},ExpressionUUID->"8c3055dc-91fe-41f5-9086-\
+7229e7c5a764"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"jumpSpeeds", "=", 
+  RowBox[{"First", "@", 
+   RowBox[{"First", "@", 
+    RowBox[{"Solve", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"springEnergy", "+", 
+        RowBox[{
+         FractionBox["1", "2"], 
+         RowBox[{"(", 
+          RowBox[{"springMass", "+", "dragMass", "+", "payloadMass"}], ")"}], 
+         " ", "gravity", " ", "compressionRatio", " ", "springLength"}]}], 
+       "\[Equal]", 
+       RowBox[{
+        RowBox[{"energy", "[", 
+         RowBox[{
+          RowBox[{"springLength", "+", "losslessHeight"}], ",", 
+          "losslessHeight", ",", "jumpSpeed", ",", "jumpSpeed"}], "]"}], "+", 
+        
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"springMass", "+", "dragMass", "+", "payloadMass"}], ")"}], 
+         "gravity", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            FractionBox["1", "2"], 
+            RowBox[{"(", 
+             RowBox[{"springLength", "+", 
+              RowBox[{"2", "losslessHeight"}]}], ")"}]}], "+", 
+           "losslessHeight"}], ")"}]}]}]}], ",", "jumpSpeed"}], 
+     "]"}]}]}]}]], "Input",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQA2IQ/fDv1sJ0pTeOCQcYS0F02ZQFtSBa4VhsE4heyrqR
+PQNI+3Tu5QLR69WCBUG0a8l2YRBdcV16GYj+VHdnLYhWfLFiK4i+YjN9B4g+
+lJvDnwlSL7ANTDO+/u0AogUfrXAC0dPUTk8H8/NPzQfRTbs3Tc4C0vYhD6aA
+6J6i8AUgOunmQTBd7yAckg2kY02fg+mY6z6RIJrjjG80iL74410CiJ77hDkJ
+RCeJ/pzUo/LG8eON1ikgeuLM1V59QLpp/XEw/TNdLABEm52KCwLRnWqT40D0
+hHKlBBAtMr8sDUT/OrYWTEc94MoG0YuWS+eA6AXuc0tAtMaWDWBaSeDim34g
+feCH0nsQDQA3H6eC
+  "],
+ CellLabel->"In[62]:=",ExpressionUUID->"eb43abaf-d028-461a-b34b-1b4871cce394"],
+
+Cell[BoxData[
+ RowBox[{"jumpSpeed", "\[Rule]", 
+  RowBox[{"-", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"\[ImaginaryI]", " ", "springLength", " ", 
+       RowBox[{"\[Sqrt]", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+          "4", " ", "dragMass", " ", "gravity", " ", "losslessHeight"}], "+", 
+          
+          RowBox[{
+          "4", " ", "gravity", " ", "losslessHeight", " ", "payloadMass"}], 
+          "-", 
+          RowBox[{"2", " ", "springEnergy"}], "+", 
+          RowBox[{"dragMass", " ", "gravity", " ", "springLength"}], "-", 
+          RowBox[{
+          "compressionRatio", " ", "dragMass", " ", "gravity", " ", 
+           "springLength"}], "+", 
+          RowBox[{"gravity", " ", "payloadMass", " ", "springLength"}], "-", 
+          RowBox[{
+          "compressionRatio", " ", "gravity", " ", "payloadMass", " ", 
+           "springLength"}], "+", 
+          RowBox[{
+          "4", " ", "gravity", " ", "losslessHeight", " ", "springMass"}], 
+          "+", 
+          RowBox[{"gravity", " ", "springLength", " ", "springMass"}], "-", 
+          RowBox[{
+          "compressionRatio", " ", "gravity", " ", "springLength", " ", 
+           "springMass"}]}], ")"}]}]}], ")"}], "/", 
+     RowBox[{"(", 
+      RowBox[{"losslessHeight", " ", 
+       SqrtBox["springMass"]}], ")"}]}], ")"}]}]}]], "Output",
+ CellChangeTimes->{{3.776134155942222*^9, 3.776134163764278*^9}, {
+   3.776135199783065*^9, 3.7761352545259457`*^9}, 3.776135326806748*^9, 
+   3.776136576662286*^9, 3.7761366498027353`*^9, 3.776137041301281*^9, 
+   3.776137342232914*^9, 3.776137750707793*^9, {3.7761383955345984`*^9, 
+   3.776138506392104*^9}, 3.776140461216237*^9, 3.7761405510681953`*^9, 
+   3.77614199412206*^9, {3.776142033391822*^9, 3.7761420433742657`*^9}, {
+   3.776142088841257*^9, 3.776142096682012*^9}, 3.77725849615138*^9, 
+   3.777258661673839*^9, 3.7772621668477087`*^9, {3.777262209047215*^9, 
+   3.777262227737937*^9}, {3.777262383014436*^9, 3.7772623902286587`*^9}, 
+   3.777262433401984*^9, 3.777262501872466*^9, 3.777265535928434*^9},
+ CellLabel->"Out[62]=",ExpressionUUID->"9f9de24b-a789-4ae7-8bd9-39ebbf813310"]
+}, Open  ]],
+
+Cell["\<\
+Note that the imaginary number \[ImaginaryI] appears as a coefficient on the \
+jump speed.  This can be eliminated by pulling a factor of \[ImaginaryI] out \
+of the square root term, resulting in a positive jump speed.\
+\>", "Text",
+ CellChangeTimes->{{3.777264924682654*^9, 
+  3.7772649415683413`*^9}},ExpressionUUID->"07bc1473-fce0-40c3-8bf5-\
+21e85069bb87"],
+
+Cell["\<\
+The maximum jump height will occur when the jump speed is zero.  \
+\>", "Text",
+ CellChangeTimes->{{3.77614272264399*^9, 3.776142845406145*^9}, {
+  3.776142876015286*^9, 3.776142900104151*^9}, {3.7772624532652597`*^9, 
+  3.777262490506287*^9}, {3.7772648682650433`*^9, 3.777264923307393*^9}, {
+  3.777265270045146*^9, 
+  3.777265293660289*^9}},ExpressionUUID->"77ea734a-562b-4a0d-8564-\
+84d28e4af86c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"losslessJumpHeight", "=", 
+  RowBox[{
+   RowBox[{"First", "@", 
+    RowBox[{"First", "@", 
+     RowBox[{"Solve", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"jumpSpeed", "\[Equal]", "0"}], "/.", "jumpSpeeds"}], ",", 
+       "losslessHeight"}], "]"}]}]}], "//", "Simplify"}]}]], "Input",
+ CellChangeTimes->{{3.77613860351375*^9, 3.776138609160581*^9}, {
+   3.77613864712251*^9, 3.776138719700288*^9}, {3.776138761150332*^9, 
+   3.776138777252384*^9}, {3.776140029700595*^9, 3.7761401838638563`*^9}, {
+   3.776140390551464*^9, 3.7761404148632603`*^9}, 3.776140459156036*^9, {
+   3.776140559879181*^9, 3.7761405630098658`*^9}, {3.7761428490972424`*^9, 
+   3.776142871246995*^9}, {3.7772585058364*^9, 3.777258506176694*^9}, {
+   3.777258593247878*^9, 3.777258597036087*^9}, {3.7772587753169527`*^9, 
+   3.777258777688685*^9}, {3.7772593061243134`*^9, 3.777259307177944*^9}, {
+   3.777265334505411*^9, 3.777265392033189*^9}},
+ CellLabel->"In[63]:=",ExpressionUUID->"1deacc13-5324-41f4-9453-545564edd917"],
+
+Cell[BoxData[
+ RowBox[{"losslessHeight", "\[Rule]", 
+  RowBox[{
+   FractionBox["1", "4"], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "1"}], "+", "compressionRatio"}], ")"}], " ", 
+      "springLength"}], "+", 
+     FractionBox[
+      RowBox[{"2", " ", "springEnergy"}], 
+      RowBox[{"gravity", " ", 
+       RowBox[{"(", 
+        RowBox[{"dragMass", "+", "payloadMass", "+", "springMass"}], 
+        ")"}]}]]}], ")"}]}]}]], "Output",
+ CellChangeTimes->{{3.77614007719174*^9, 3.7761401345977488`*^9}, {
+   3.77614017822641*^9, 3.776140184156077*^9}, {3.776140401601553*^9, 
+   3.776140415127667*^9}, 3.776140463992467*^9, 3.7761405642993193`*^9, 
+   3.776142106997519*^9, {3.77614285174622*^9, 3.776142871574568*^9}, {
+   3.777258501088567*^9, 3.777258507051958*^9}, 3.7772585983864727`*^9, 
+   3.777258665016603*^9, 3.7772587781017714`*^9, 3.777259310889526*^9, {
+   3.777265363033793*^9, 3.777265392286709*^9}, 3.777265541087715*^9},
+ CellLabel->"Out[63]=",ExpressionUUID->"28f2dee3-bde4-40d4-a48d-6f09220b4078"]
+}, Open  ]],
+
+Cell["\<\
+What is the efficiency of this jumper?  If we divide this jump height by the \
+jump height of a particle launched up with some initial energy, we get the \
+efficiency\
+\>", "Text",
+ CellChangeTimes->{{3.7772586079108067`*^9, 3.7772586265647297`*^9}, {
+  3.7772586933030853`*^9, 
+  3.777258746536859*^9}},ExpressionUUID->"bf83d281-2e85-4362-b743-\
+d1a2c7db7d36"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"jumperEfficiency", "=", 
+  RowBox[{"efficiency", "\[Rule]", 
+   RowBox[{"Simplify", "[", 
+    RowBox[{
+     FractionBox["losslessHeight", "idealLosslessHeight"], "/.", 
+     RowBox[{"{", 
+      RowBox[{"losslessJumpHeight", ",", 
+       RowBox[{"idealLosslessHeight", "\[Rule]", 
+        FractionBox["springEnergy", 
+         RowBox[{"gravity", 
+          RowBox[{"(", 
+           RowBox[{"dragMass", "+", "payloadMass", "+", "springMass"}], 
+           ")"}]}]]}]}], "}"}]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.777258761593815*^9, 3.77725890978214*^9}, {
+   3.777258984538216*^9, 3.7772589988171453`*^9}, 3.777259315308935*^9, {
+   3.777265755863162*^9, 3.7772657563475857`*^9}, {3.777265861529447*^9, 
+   3.777265862022264*^9}},
+ CellLabel->"In[66]:=",ExpressionUUID->"4944c946-d3a7-4a51-abae-cc1187cb7659"],
+
+Cell[BoxData[
+ RowBox[{"efficiency", "\[Rule]", 
+  RowBox[{
+   FractionBox["1", "4"], " ", 
+   RowBox[{"(", 
+    RowBox[{"2", "+", 
+     FractionBox[
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "1"}], "+", "compressionRatio"}], ")"}], " ", "gravity",
+        " ", "springLength", " ", 
+       RowBox[{"(", 
+        RowBox[{"dragMass", "+", "payloadMass", "+", "springMass"}], ")"}]}], 
+      "springEnergy"]}], ")"}]}]}]], "Output",
+ CellChangeTimes->{{3.7772588630080214`*^9, 3.777258910073564*^9}, 
+   3.777259001674609*^9, 3.7772593157103863`*^9, 3.777265862691408*^9},
+ CellLabel->"Out[66]=",ExpressionUUID->"0acb8cef-3878-450c-8088-e4f25c8422bb"]
+}, Open  ]],
+
+Cell["\<\
+Because all of the values in this equation are positive, the efficiency has \
+an upper bound of 50%.  Additionally, it would be unphysical for efficiency \
+to go below 0%, so the second term must be less than 1/2, implying that the \
+spring energy must be greater than half the numerator of the second term.  \
+Physically, this lower bound on spring energy can be interpreted as a minimum \
+energy needed to get off the ground.\
+\>", "Text",
+ CellChangeTimes->{{3.777259348370625*^9, 3.7772594730856533`*^9}, {
+  3.7772595035764103`*^9, 
+  3.77725962252334*^9}},ExpressionUUID->"66be3968-24dd-4cb9-94be-\
+b87d689c22a4"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Lossy Model", "Chapter",
+ CellChangeTimes->{{3.777259736566372*^9, 
+  3.7772597389666853`*^9}},ExpressionUUID->"adaaa316-0ef8-406b-8f68-\
+42add7a768b8"],
+
+Cell["\<\
+To understand the effect of air drag on this jumping robot, we need to know \
+the initial state of the robot.  On this system, the drag surface will be \
+attached to the bottom of the robot, so drag will only come into play when \
+the base of the robot has non-zero velocity.  When this is the case, the \
+spring will have decompressed to its neutral length and the tip will be going \
+at its maximum velocity.\
+\>", "Text",
+ CellChangeTimes->{{3.777260113073542*^9, 3.77726014771388*^9}, {
+  3.7772602349101667`*^9, 3.777260376305966*^9}, {3.777260454080716*^9, 
+  3.77726051514231*^9}, {3.7772621332728043`*^9, 
+  3.7772621462945623`*^9}},ExpressionUUID->"b08e82b2-5d79-4eab-aca6-\
+f5646e698a4d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"tipSpeed", "=", 
+  RowBox[{"First", "@", 
+   RowBox[{"Last", "@", 
+    RowBox[{"Solve", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"springEnergy", "+", 
+        RowBox[{
+         FractionBox["1", "2"], "springMass", " ", "gravity", " ", 
+         "compressionRatio", " ", "springLength"}]}], "\[Equal]", 
+       RowBox[{
+        RowBox[{"energy", "[", 
+         RowBox[{"springLength", ",", "0", ",", "maxTipSpeed", ",", "0"}], 
+         "]"}], "+", 
+        RowBox[{
+         FractionBox["1", "2"], "springMass", " ", "gravity", " ", 
+         "springLength"}]}]}], ",", "maxTipSpeed"}], "]"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.776202739065852*^9, 3.776202803978943*^9}, {
+  3.7762028585171537`*^9, 3.7762029037648277`*^9}, {3.776202935065604*^9, 
+  3.77620294277455*^9}, {3.777259911759145*^9, 3.7772599220985937`*^9}},
+ CellLabel->"In[14]:=",ExpressionUUID->"caa58462-1fb3-42a3-b28e-c458c8894c08"],
+
+Cell[BoxData[
+ RowBox[{"maxTipSpeed", "\[Rule]", 
+  RowBox[{
+   FractionBox["1", 
+    SqrtBox["springMass"]], 
+   RowBox[{
+    SqrtBox["3"], " ", 
+    RowBox[{"\[Sqrt]", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"2", " ", "springEnergy"}], "-", 
+       RowBox[{"gravity", " ", "springLength", " ", "springMass"}], "+", 
+       RowBox[{
+       "compressionRatio", " ", "gravity", " ", "springLength", " ", 
+        "springMass"}]}], ")"}]}]}]}]}]], "Output",
+ CellChangeTimes->{
+  3.7762029053089848`*^9, 3.776202943453266*^9, {3.777259917259562*^9, 
+   3.777259922474267*^9}, 3.777265976690526*^9, {3.7796417599277763`*^9, 
+   3.779641778685358*^9}},
+ CellLabel->"Out[14]=",ExpressionUUID->"6fdb3bd0-f8ea-405c-bc3c-35857eaa5c8c"]
+}, Open  ]],
+
+Cell["\<\
+To find the total efficiency of the jump, I\[CloseCurlyQuote]ll find what the \
+speed of the jumper is when the tip and the base are going the same speed a \
+short distance from the ground, which seems a reasonably physical \
+approximation for this system.  \
+\>", "Text",
+ CellChangeTimes->{{3.779642509844377*^9, 3.779642511483981*^9}, {
+  3.779642570054267*^9, 3.779642583335338*^9}, {3.779642695930891*^9, 
+  3.7796428009702663`*^9}},ExpressionUUID->"12cafe8f-bb6a-4173-865e-\
+48e1e58e0d42"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Last", "[", 
+  RowBox[{"Last", "[", 
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"energy", "[", 
+        RowBox[{"springLength", ",", "0", ",", "maxTipSpeed", ",", "0"}], 
+        "]"}], "\[Equal]", 
+       RowBox[{
+        RowBox[{"energy", "[", 
+         RowBox[{
+          RowBox[{"springLength", "+", "height"}], ",", "height", ",", "v", 
+          ",", "v"}], "]"}], "+", 
+        RowBox[{"springMass", " ", "gravity", " ", "height"}]}]}], ")"}], ",",
+      "v"}], "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.779641637767812*^9, 3.779641747292118*^9}, {
+   3.779642054997555*^9, 3.779642093999587*^9}, 3.77964223041544*^9, {
+   3.779642481800103*^9, 3.7796424873732862`*^9}, {3.7796425265533733`*^9, 
+   3.779642545018299*^9}},
+ CellLabel->"In[68]:=",ExpressionUUID->"e3fab8c5-554d-46e7-b889-e0e0c3024880"],
+
+Cell[BoxData[
+ RowBox[{"v", "\[Rule]", 
+  FractionBox[
+   SqrtBox[
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "6"}], " ", "gravity", " ", "height", " ", 
+      SuperscriptBox["springLength", "2"]}], "+", 
+     RowBox[{
+      SuperscriptBox["maxTipSpeed", "2"], " ", 
+      SuperscriptBox["springLength", "2"]}]}]], 
+   RowBox[{
+    SqrtBox["3"], " ", "height"}]]}]], "Output",
+ CellChangeTimes->{{3.779641749177402*^9, 3.779641780711505*^9}, 
+   3.779642095269106*^9, 3.779642230851644*^9, 3.779642487877729*^9, {
+   3.7796425322158623`*^9, 3.779642545900442*^9}},
+ CellLabel->"Out[68]=",ExpressionUUID->"d2b8355c-20e2-477e-8b9a-af4f03fdc352"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Because this speed goes with ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["height", 
+    RowBox[{
+     RowBox[{"-", "1"}], "/", "2"}]], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "51481429-7fd4-42f6-977b-0079e2df308c"],
+ ", it will blow up to infinity for small heights, which is unphysical.  This \
+means that air drag is a necessary component of the jump efficiency, and so a \
+differential equation needs to be solved to find the ultimate jump velocity \
+of the robot. "
+}], "Text",
+ CellChangeTimes->{{3.779642821577325*^9, 
+  3.7796430047444143`*^9}},ExpressionUUID->"56f1906f-90fd-4ae5-a7be-\
+2c713521bb7d"],
+
+Cell[TextData[{
+ "\t",
+ StyleBox["1",
+  FontVariations->{"CompatibilityType"->"Superscript"}],
+ "\t",
+ "M",
+ ".",
+ " ",
+ "Ilton",
+ " ",
+ "et",
+ ".",
+ " ",
+ "al",
+ ".",
+ "  ",
+ "\"Supplementary Materials for The principles of cascading power limits in \
+small, fast biological and engineered systems\"",
+ ",",
+ " ",
+ "Science",
+ ",",
+ " ",
+ "27",
+ " ",
+ "April",
+ " ",
+ "2018."
+}], "Reference",
+ Editable->False,
+ TaggingRules->{ReferenceNoteData -> ""},
+ CellTags->"00005981",ExpressionUUID->"0e50d380-2167-4274-b1b9-89a238d30d11"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 778},
+WindowMargins->{{Automatic, 119}, {Automatic, 0}},
+FrontEndVersion->"12.0 for Mac OS X x86 (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "00005981"->{
+  Cell[23345, 572, 531, 31, 38, "Reference",ExpressionUUID->"0e50d380-2167-4274-b1b9-89a238d30d11",
+   CellTags->"00005981"]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"00005981", 24191, 617}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 183, 3, 160, "Title",ExpressionUUID->"138ff5a6-83f3-4833-a7ad-e93ed0db1b08"],
+Cell[766, 27, 163, 3, 53, "Subtitle",ExpressionUUID->"37460bd0-3ea3-48c7-bbb8-783fb8e66e84"],
+Cell[CellGroupData[{
+Cell[954, 34, 163, 3, 69, "Chapter",ExpressionUUID->"c17cd5fe-76d2-4566-a93b-34f171cc468b"],
+Cell[1120, 39, 1572, 30, 137, "Text",ExpressionUUID->"db6debf8-3de3-4d86-bd32-5bf6068e8e9c"],
+Cell[2695, 71, 502, 10, 81, "Text",ExpressionUUID->"d6138002-adf8-4adb-a724-63b233059934"],
+Cell[3200, 83, 745, 13, 73, "Input",ExpressionUUID->"23699385-cd69-4d6b-b3f4-87715476ffc4"],
+Cell[3948, 98, 1126, 23, 94, "Input",ExpressionUUID->"ad7074e9-60f6-44fc-9552-5ba7216b6c36"],
+Cell[5077, 123, 489, 10, 58, "Text",ExpressionUUID->"00c404bd-1adf-4e0e-ab93-c8f42f124b6f"],
+Cell[5569, 135, 1062, 22, 94, "Input",ExpressionUUID->"9ede62a7-b936-4e11-bd8a-9f54701ba933"],
+Cell[6634, 159, 1228, 26, 151, "Input",ExpressionUUID->"5fb79ab7-3dcd-47d6-9819-77bafb19a7ae"],
+Cell[7865, 187, 781, 13, 150, "Text",ExpressionUUID->"8c3055dc-91fe-41f5-9086-7229e7c5a764"],
+Cell[CellGroupData[{
+Cell[8671, 204, 1622, 42, 239, "Input",ExpressionUUID->"eb43abaf-d028-461a-b34b-1b4871cce394"],
+Cell[10296, 248, 2164, 45, 186, "Output",ExpressionUUID->"9f9de24b-a789-4ae7-8bd9-39ebbf813310"]
+}, Open  ]],
+Cell[12475, 296, 370, 7, 58, "Text",ExpressionUUID->"07bc1473-fce0-40c3-8bf5-21e85069bb87"],
+Cell[12848, 305, 411, 8, 35, "Text",ExpressionUUID->"77ea734a-562b-4a0d-8564-84d28e4af86c"],
+Cell[CellGroupData[{
+Cell[13284, 317, 1032, 19, 52, "Input",ExpressionUUID->"1deacc13-5324-41f4-9453-545564edd917"],
+Cell[14319, 338, 1078, 24, 76, "Output",ExpressionUUID->"28f2dee3-bde4-40d4-a48d-6f09220b4078"]
+}, Open  ]],
+Cell[15412, 365, 371, 8, 58, "Text",ExpressionUUID->"bf83d281-2e85-4362-b743-d1a2c7db7d36"],
+Cell[CellGroupData[{
+Cell[15808, 377, 841, 18, 166, "Input",ExpressionUUID->"4944c946-d3a7-4a51-abae-cc1187cb7659"],
+Cell[16652, 397, 682, 17, 76, "Output",ExpressionUUID->"0acb8cef-3878-450c-8088-e4f25c8422bb"]
+}, Open  ]],
+Cell[17349, 417, 629, 11, 104, "Text",ExpressionUUID->"66be3968-24dd-4cb9-94be-b87d689c22a4"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18015, 433, 158, 3, 69, "Chapter",ExpressionUUID->"adaaa316-0ef8-406b-8f68-42add7a768b8"],
+Cell[18176, 438, 708, 12, 104, "Text",ExpressionUUID->"b08e82b2-5d79-4eab-aca6-f5646e698a4d"],
+Cell[CellGroupData[{
+Cell[18909, 454, 936, 21, 156, "Input",ExpressionUUID->"caa58462-1fb3-42a3-b28e-c458c8894c08"],
+Cell[19848, 477, 737, 19, 85, "Output",ExpressionUUID->"6fdb3bd0-f8ea-405c-bc3c-35857eaa5c8c"]
+}, Open  ]],
+Cell[20600, 499, 505, 9, 81, "Text",ExpressionUUID->"12cafe8f-bb6a-4173-865e-48e1e58e0d42"],
+Cell[CellGroupData[{
+Cell[21130, 512, 888, 21, 94, "Input",ExpressionUUID->"e3fab8c5-554d-46e7-b889-e0e0c3024880"],
+Cell[22021, 535, 646, 16, 65, "Output",ExpressionUUID->"d2b8355c-20e2-477e-8b9a-af4f03fdc352"]
+}, Open  ]],
+Cell[22682, 554, 660, 16, 81, "Text",ExpressionUUID->"56f1906f-90fd-4ae5-a7be-2c713521bb7d"],
+Cell[23345, 572, 531, 31, 38, "Reference",ExpressionUUID->"0e50d380-2167-4274-b1b9-89a238d30d11",
+ CellTags->"00005981"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
